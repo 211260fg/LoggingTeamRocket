@@ -1,6 +1,7 @@
 package com.hackthefuture.florianzjef.loggingapp.adapters;
 
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 
 import java.util.List;
 
-public class SamplesRecyclerViewAdpater extends RecyclerView.Adapter<SamplesRecyclerViewAdpater.LogViewHolder>{
+public class SamplesRecyclerViewAdpater extends RecyclerView.Adapter<SamplesRecyclerViewAdpater.SampleViewHolder>{
 
     private List<Sample> samples;
     private LogInteractionListener listener;
@@ -24,18 +25,22 @@ public class SamplesRecyclerViewAdpater extends RecyclerView.Adapter<SamplesRecy
     }
 
     @Override
-    public LogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_sample, parent, false);
-        return new LogViewHolder(v);
+        return new SampleViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final LogViewHolder holder, final int position) {
-        final Sample log = samples.get(position);
-        holder.tvTitle.setText(log.getName());
+    public void onBindViewHolder(final SampleViewHolder holder, final int position) {
+        final Sample sample = samples.get(position);
+        holder.tvTitle.setText(sample.getName());
+        holder.tvDate.setText(sample.getDatetime());
 
         ViewCompat.setTransitionName(holder.tvTitle, String.valueOf(position) + "_title");
-        holder.tvTitle.setOnClickListener(new View.OnClickListener() {
+        ViewCompat.setTransitionName(holder.tvDate, String.valueOf(position) + "_date");
+        ViewCompat.setTransitionName(holder.cvSample, String.valueOf(position) + "_cv");
+
+        holder.cvSample.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onLogClicked(holder, position);
@@ -55,16 +60,20 @@ public class SamplesRecyclerViewAdpater extends RecyclerView.Adapter<SamplesRecy
         this.samples = logs;
     }
 
-    public class LogViewHolder extends RecyclerView.ViewHolder{
+    public class SampleViewHolder extends RecyclerView.ViewHolder{
         public TextView tvTitle;
+        public TextView tvDate;
+        public CardView cvSample;
 
-        LogViewHolder(View itemView) {
+        SampleViewHolder(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvDate = (TextView) itemView.findViewById(R.id.tvDate);
+            cvSample = (CardView) itemView.findViewById(R.id.cvSample);
         }
     }
 
     public interface LogInteractionListener{
-        void onLogClicked(LogViewHolder holder, int pos);
+        void onLogClicked(SampleViewHolder holder, int pos);
     }
 }

@@ -18,7 +18,7 @@ import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 public class SampleDetailsFragment extends Fragment {
 
     private static final String ARG_LOG = "LOG";
-    private Sample log;
+    private Sample sample;
     private View rootView;
 
     public static SampleDetailsFragment newInstance(Sample log) {
@@ -34,7 +34,7 @@ public class SampleDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        log = (Sample) getArguments().getSerializable(ARG_LOG);
+        sample = (Sample) getArguments().getSerializable(ARG_LOG);
         setHasOptionsMenu(true);
     }
 
@@ -54,9 +54,11 @@ public class SampleDetailsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_sample_details, container, false);
         TextView tvTitle = (TextView) rootView.findViewById(R.id.tvTitle);
         TextView tvDescription = (TextView) rootView.findViewById(R.id.tvDescription);
+        TextView tvDatetime = (TextView) rootView.findViewById(R.id.tvDate);
 
-        tvTitle.setText(log.getName());
-        tvDescription.setText(log.getRemark());
+        tvTitle.setText(sample.getName());
+        tvDescription.setText(sample.getRemark());
+        tvDescription.setText(sample.getRemark());
 
         return rootView;
     }
