@@ -58,7 +58,7 @@ public class SampleDetailsFragment extends Fragment {
 
         tvTitle.setText(sample.getName());
         tvDescription.setText(sample.getRemark());
-        tvDescription.setText(sample.getRemark());
+        tvDatetime.setText(sample.getDatetime());
 
         return rootView;
     }
