@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Fade;
@@ -30,11 +31,28 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
     private View rootView;
     private RecyclerView rvLogs;
     private FloatingActionButton fab;
+    private static final String ARG_ALLSAMPLES="ALLSAMPLES";
 
-    public static SamplesFragment newInstance() {
+    private boolean loadAllSamples=true;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+
+    public static SamplesFragment newInstance(boolean allSamples){
+    Bundle args = new Bundle();
+    args.putBoolean(ARG_ALLSAMPLES, allSamples);
         SamplesFragment fragment = new SamplesFragment();
-        return fragment;
+    fragment.setArguments(args);
+
+    return fragment;
+}
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loadAllSamples = getArguments().getBoolean(ARG_ALLSAMPLES);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +63,24 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
         rvLogs.setAdapter(new SamplesRecyclerViewAdpater(Repository.getSamples(), this));
 
         Repository.addListener(this);
-        Repository.loadSamples();
+        if(loadAllSamples)
+            Repository.loadAllSamples();
+        else
+            Repository.loadResearcherSamples();
+
+
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(loadAllSamples)
+                    Repository.loadAllSamples();
+                else
+                    Repository.loadResearcherSamples();
+            }
+        });
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setEnabled(true);
 
         return rootView;
     }
@@ -66,6 +101,15 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
         super.onDetach();
         ((MainActivity) getActivity()).toggleFABVisibility(false);
         Repository.removeListener(this);
+    }
+
+    public void reloadSamples(boolean loadAllSamples){
+        this.loadAllSamples=loadAllSamples;
+        swipeRefreshLayout.setRefreshing(true);
+        if(loadAllSamples)
+            Repository.loadAllSamples();
+        else
+            Repository.loadResearcherSamples();
     }
 
     @Override
@@ -100,10 +144,16 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
             SamplesRecyclerViewAdpater adapter = (SamplesRecyclerViewAdpater) rvLogs.getAdapter();
             adapter.setSamples(samples);
             adapter.notifyDataSetChanged();
+        if(swipeRefreshLayout!=null&&swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onSamplesLoadFailed(String message) {
         Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT).show();
+        if(swipeRefreshLayout!=null&&swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
     }
+
+
 }

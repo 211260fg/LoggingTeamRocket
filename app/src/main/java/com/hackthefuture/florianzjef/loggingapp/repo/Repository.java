@@ -1,10 +1,10 @@
 package com.hackthefuture.florianzjef.loggingapp.repo;
 
-import com.hackthefuture.florianzjef.loggingapp.fragments.SamplesFragment;
 import com.hackthefuture.florianzjef.loggingapp.models.Researcher;
 import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 import com.hackthefuture.florianzjef.loggingapp.rest.ResearcherCallback;
 import com.hackthefuture.florianzjef.loggingapp.rest.SamplesCallback;
+import com.hackthefuture.florianzjef.loggingapp.session.UserSessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,11 @@ public class Repository {
         return samples;
     }
 
-    public static void loadSamples(){
-        samplesCallback.startCallback();
+    public static void loadAllSamples(){
+        samplesCallback.getAllSamples();
+    }
+    public static void loadResearcherSamples(){
+        samplesCallback.getResearcherSamples();
     }
 
 
@@ -68,6 +71,10 @@ public class Repository {
 
     public static void registerResearcher(Researcher researcher){
         researcherCallback.register(researcher);
+    }
+
+    public static void logoutResearcher(){
+        UserSessionManager.logoutUser();
     }
 
     public static void onResearcherTokenResponse(String token) {
