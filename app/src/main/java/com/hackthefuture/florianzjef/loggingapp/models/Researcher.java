@@ -5,6 +5,11 @@ public class Researcher {
     private String name="";
     private String password="";
 
+    public Researcher(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }

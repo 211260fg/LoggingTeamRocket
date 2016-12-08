@@ -1,5 +1,6 @@
 package com.hackthefuture.florianzjef.loggingapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import com.hackthefuture.florianzjef.loggingapp.R;
 import com.hackthefuture.florianzjef.loggingapp.fragments.SamplesFragment;
 import com.hackthefuture.florianzjef.loggingapp.fragments.NewSampleFragment;
 import com.hackthefuture.florianzjef.loggingapp.fragments.OnFragmentInteractionListener;
+import com.hackthefuture.florianzjef.loggingapp.session.UserSessionManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener{
 
@@ -26,9 +28,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton fab;
     ActionBarDrawerToggle toggle;
 
+    private UserSessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent i = getIntent();
+        UserSessionManager sessionfromintent = i.getParcelableExtra("SESSION");
+        if (sessionfromintent != null) {
+            session = sessionfromintent;
+        } else {
+            session = new UserSessionManager(getApplicationContext());
+        }
+
+        if (!session.checkLogin()) {
+            finish();
+            return;
+        }
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
