@@ -38,7 +38,7 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_logs, container, false);
+        rootView = inflater.inflate(R.layout.fragment_samples, container, false);
 
         rvLogs = (RecyclerView) rootView.findViewById(R.id.rvLogs);
         rvLogs.setLayoutManager(new GridLayoutManager(getContext(), 3));

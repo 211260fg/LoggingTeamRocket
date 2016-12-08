@@ -25,7 +25,7 @@ public class SamplesRecyclerViewAdpater extends RecyclerView.Adapter<SamplesRecy
 
     @Override
     public LogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_log, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_sample, parent, false);
         return new LogViewHolder(v);
     }
 
