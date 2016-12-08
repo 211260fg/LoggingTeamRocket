@@ -66,15 +66,10 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
 
 
 
-        if(Repository.getSamples().size()>0) {
-            onSamplesLoadSuccess(Repository.getSamples());
-        }
-        else {
             if (loadAllSamples)
                 Repository.loadAllSamples();
             else
                 Repository.loadResearcherSamples();
-        }
 
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
