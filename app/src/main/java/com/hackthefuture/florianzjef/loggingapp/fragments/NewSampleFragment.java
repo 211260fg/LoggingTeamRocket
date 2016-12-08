@@ -119,7 +119,7 @@ public class NewSampleFragment extends Fragment {
             Sample sample= new Sample(name,value,description,UserSessionManager.getCurrentUser().getName());
             Repository.addSample(sample);
         }
-
+        getActivity().onBackPressed();
 
     }
 
