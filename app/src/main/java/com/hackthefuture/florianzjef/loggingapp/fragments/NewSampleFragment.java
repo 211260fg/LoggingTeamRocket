@@ -56,6 +56,7 @@ public class NewSampleFragment extends Fragment {
             }
         });
 
+        rootView = inflater.inflate(R.layout.fragment_new_sample, container, false);
         setHasOptionsMenu(true);
         return rootView;
     }

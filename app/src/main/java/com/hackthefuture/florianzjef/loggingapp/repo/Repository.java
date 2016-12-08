@@ -1,7 +1,9 @@
 package com.hackthefuture.florianzjef.loggingapp.repo;
 
 import com.hackthefuture.florianzjef.loggingapp.fragments.SamplesFragment;
+import com.hackthefuture.florianzjef.loggingapp.models.Researcher;
 import com.hackthefuture.florianzjef.loggingapp.models.Sample;
+import com.hackthefuture.florianzjef.loggingapp.rest.ResearcherCallback;
 import com.hackthefuture.florianzjef.loggingapp.rest.SamplesCallback;
 
 import java.util.ArrayList;
@@ -10,9 +12,11 @@ import java.util.List;
 public class Repository {
 
     private static SamplesCallback samplesCallback = new SamplesCallback();
+    private static ResearcherCallback researcherCallback = new ResearcherCallback();
 
     private static List<Sample> samples = new ArrayList<>();
     private static List<OnSamplesLoadedListener> samplesListeners = new ArrayList<>();
+    private static List<OnResearcherConnectedListener> researcherListeners = new ArrayList<>();
 
 
     public static List<Sample> getSamples() {
@@ -34,6 +38,16 @@ public class Repository {
             samplesListeners.remove(listener);
     }
 
+    public static void addListener(OnResearcherConnectedListener listener){
+        if(!researcherListeners.contains(listener))
+            researcherListeners.add(listener);
+    }
+
+    public static void removeListener(OnResearcherConnectedListener listener) {
+        if(researcherListeners.contains(listener))
+            researcherListeners.remove(listener);
+    }
+
 
     public static void onSamplesLoaded(List<Sample> samples) {
         Repository.samples = samples;
@@ -45,6 +59,26 @@ public class Repository {
     public static void onSampleLoadFailed(String message) {
         for(OnSamplesLoadedListener listener: samplesListeners){
             listener.onSamplesLoadFailed(message);
+        }
+    }
+
+    public static void loginResearcher(Researcher researcher){
+        researcherCallback.getToken(researcher);
+    }
+
+    public static void registerResearcher(Researcher researcher){
+        researcherCallback.register(researcher);
+    }
+
+    public static void onResearcherTokenResponse(String token) {
+        for(OnResearcherConnectedListener listener: researcherListeners){
+            listener.onTokenReceived(token);
+        }
+    }
+
+    public static void onResearcherConnectionFailed(String message){
+        for(OnResearcherConnectedListener listener: researcherListeners){
+            listener.onConnectionFailed(message);
         }
     }
 }

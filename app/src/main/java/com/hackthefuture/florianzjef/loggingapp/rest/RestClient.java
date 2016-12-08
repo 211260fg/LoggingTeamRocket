@@ -3,7 +3,9 @@ package com.hackthefuture.florianzjef.loggingapp.rest;
 import android.util.Base64;
 import android.util.Log;
 
+import com.hackthefuture.florianzjef.loggingapp.models.Researcher;
 import com.hackthefuture.florianzjef.loggingapp.models.SampleWrapper;
+import com.hackthefuture.florianzjef.loggingapp.models.Token;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Protocol;
@@ -16,7 +18,9 @@ import java.util.Collections;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.POST;
 
 public class RestClient {
 
@@ -78,6 +82,35 @@ public class RestClient {
 
         @GET(Values.URL_SAMPLES)
         Call<SampleWrapper> getSamples();
+
+        @GET(Values.URL_SAMPLES_ALL)
+        Call<SampleWrapper> getAllSamples();
+
+        @GET(Values.URL_SAMPLES_POST)
+        Call<SampleWrapper> postSample();
+
+    }
+
+    interface ResearcherApiInterface{
+
+        @POST(Values.URL_RESEARCHER_REGISTER)
+        Call<Token> register(@Body Researcher researcher);
+
+        @POST(Values.URL_RESEARCHER_GETTOKEN)
+        Call<Token> getToken(@Body Researcher researcher);
+
+    }
+
+    interface PhotoApiInterface{
+
+        @GET(Values.URL_PHOTOS)
+        Call<SampleWrapper> getPhotos();
+
+        @GET(Values.URL_PHOTOS_ALL)
+        Call<SampleWrapper> getAllPhotos();
+
+        @GET(Values.URL_PHOTOS_POST)
+        Call<SampleWrapper> postPhoto();
 
     }
 

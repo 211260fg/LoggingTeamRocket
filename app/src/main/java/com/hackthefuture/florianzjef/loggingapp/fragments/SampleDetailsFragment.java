@@ -32,6 +32,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class SampleDetailsFragment extends Fragment {
 
+    private static final String ARG_LOG = "LOG";
+    private Sample sample;
     private OnFragmentInteractionListener mListener;
     private View rootView;
 
@@ -41,13 +43,18 @@ public class SampleDetailsFragment extends Fragment {
     private EditText input_Name;
 
     public static SampleDetailsFragment newInstance() {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_LOG, log);
+
         SampleDetailsFragment fragment = new SampleDetailsFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sample = (Sample) getArguments().getSerializable(ARG_LOG);
     }
 
     @Override
@@ -77,9 +84,6 @@ public class SampleDetailsFragment extends Fragment {
         return rootView;
     }
 
-
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -89,6 +93,20 @@ public class SampleDetailsFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_sample_details, container, false);
+        TextView tvTitle = (TextView) rootView.findViewById(R.id.tvTitle);
+        TextView tvDescription = (TextView) rootView.findViewById(R.id.tvDescription);
+        TextView tvDatetime = (TextView) rootView.findViewById(R.id.tvDate);
+
+        tvTitle.setText(sample.getName());
+        tvDescription.setText(sample.getRemark());
+        tvDatetime.setText(sample.getDatetime());
+
+        return rootView;
     }
 
     @Override

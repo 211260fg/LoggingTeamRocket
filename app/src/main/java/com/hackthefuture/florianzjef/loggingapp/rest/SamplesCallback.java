@@ -27,7 +27,6 @@ public class SamplesCallback implements Callback<SampleWrapper> {
     @Override
     public void onResponse(Response<SampleWrapper> response) {
         if(response.isSuccess()){
-            Log.d("sample response", "success "+response.body());
             Repository.onSamplesLoaded(response.body().getItems());
         }
         else{

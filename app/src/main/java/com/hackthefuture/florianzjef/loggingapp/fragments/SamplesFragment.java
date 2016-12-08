@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Fade;
 import android.view.LayoutInflater;
@@ -38,10 +38,10 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_logs, container, false);
+        rootView = inflater.inflate(R.layout.fragment_samples, container, false);
 
         rvLogs = (RecyclerView) rootView.findViewById(R.id.rvLogs);
-        rvLogs.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvLogs.setLayoutManager(new LinearLayoutManager(getContext()));
         rvLogs.setAdapter(new SamplesRecyclerViewAdpater(Repository.getSamples(), this));
 
         Repository.addListener(this);
@@ -69,7 +69,7 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
     }
 
     @Override
-    public void onLogClicked(SamplesRecyclerViewAdpater.LogViewHolder holder, int pos) {
+    public void onLogClicked(SamplesRecyclerViewAdpater.SampleViewHolder holder, int pos) {
 
         SampleDetailsFragment logDetailsFragment = SampleDetailsFragment.newInstance(Repository.getSamples().get(pos));
 
@@ -85,6 +85,8 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .addSharedElement(holder.tvTitle, "tvTitle")
+                .addSharedElement(holder.tvDate, "tvDate")
+                .addSharedElement(holder.cvSample, "cvSample")
                 .replace(R.id.fragmentPane, logDetailsFragment)
                 .addToBackStack(null)
                 .commit();
@@ -98,8 +100,6 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
             SamplesRecyclerViewAdpater adapter = (SamplesRecyclerViewAdpater) rvLogs.getAdapter();
             adapter.setSamples(samples);
             adapter.notifyDataSetChanged();
-
-        Snackbar.make(getView(), "loaded "+samples.size(), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
