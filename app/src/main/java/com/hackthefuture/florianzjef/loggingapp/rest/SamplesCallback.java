@@ -17,14 +17,14 @@ public class SamplesCallback implements Callback<SampleWrapper> {
 
 
     public void getAllSamples(){
-        RestClient restClient = new RestClient("", "");
+        RestClient restClient = new RestClient();
         RestClient.SampleApiInterface service = restClient.getClient().create(RestClient.SampleApiInterface.class);
         Call<SampleWrapper> sampleCall = service.getAllSamples();
         sampleCall.enqueue(this);
     }
 
     public void getResearcherSamples(){
-        RestClient restClient = new RestClient("", "");
+        RestClient restClient = new RestClient();
         RestClient.SampleApiInterface service = restClient.getClient().create(RestClient.SampleApiInterface.class);
         Call<SampleWrapper> sampleCall = service.getSamples();
         sampleCall.enqueue(this);

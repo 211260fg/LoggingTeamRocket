@@ -29,11 +29,10 @@ public class UserSessionManager implements Parcelable, Serializable {
     // All Shared Preferences Keys
     private static final String IS_USER_LOGIN = "IsUserLoggedIn";
 
-    public static final String KEY_NAME = "name";
-    public static final String KEY_PASSWORD = "password";
-
 
     private static final String KEY_CURRENT_USER = "currentuser";
+
+    private static final String KEY_TOKEN = "token";
 
 
     // Constructor
@@ -57,15 +56,11 @@ public class UserSessionManager implements Parcelable, Serializable {
 
 
     //Create login session
-    public void createUserLoginSession(String name, String email) {
+    public void createUserLoginSession(String token) {
         // Storing login value as TRUE
         secpref.put(IS_USER_LOGIN, true);
+        secpref.put(KEY_TOKEN, token);
 
-        // Storing name in pref
-        secpref.put(KEY_NAME, name);
-
-        // Storing icon_email in pref
-        secpref.put(KEY_PASSWORD, email);
     }
 
     /**
@@ -97,23 +92,8 @@ public class UserSessionManager implements Parcelable, Serializable {
     }
 
 
-    /**
-     * Get stored session data
-     */
-    public static HashMap<String, String> getUserDetails() {
-
-        //Use hashmap to store user credentials
-        HashMap<String, String> user = new HashMap<>();
-
-        // user name
-        user.put(KEY_NAME, secpref.getString(KEY_NAME));
-
-
-        // user icon_email id
-        user.put(KEY_PASSWORD, secpref.getString(KEY_PASSWORD));
-
-        // return user
-        return user;
+    public static String getToken(){
+        return secpref.getString(KEY_TOKEN);
     }
 
     /**

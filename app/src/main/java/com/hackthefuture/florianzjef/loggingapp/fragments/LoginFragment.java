@@ -184,7 +184,7 @@ public class LoginFragment extends Fragment implements OnResearcherConnectedList
         if(progressDialog!=null)
             progressDialog.dismiss();
 
-        session.createUserLoginSession(input_email.getText().toString(), input_password.getText().toString());
+        session.createUserLoginSession(token);
         session.saveCurrentUser(new Researcher(input_email.getText().toString(), input_password.getText().toString()));
 
         Intent i = new Intent(getActivity(), MainActivity.class);

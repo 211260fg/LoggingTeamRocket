@@ -18,14 +18,14 @@ import retrofit.Response;
 public class ResearcherCallback implements Callback<Token> {
 
     public void register(Researcher researcher) {
-        RestClient restClient = new RestClient("", "");
+        RestClient restClient = new RestClient();
         RestClient.ResearcherApiInterface service = restClient.getClient().create(RestClient.ResearcherApiInterface.class);
         Call<Token> sampleCall = service.register(researcher);
         sampleCall.enqueue(this);
     }
 
     public void getToken(Researcher researcher) {
-        RestClient restClient = new RestClient("", "");
+        RestClient restClient = new RestClient();
         RestClient.ResearcherApiInterface service = restClient.getClient().create(RestClient.ResearcherApiInterface.class);
         Call<Token> sampleCall = service.getToken(researcher);
         sampleCall.enqueue(this);

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.hackthefuture.florianzjef.loggingapp.models.Researcher;
 import com.hackthefuture.florianzjef.loggingapp.models.SampleWrapper;
 import com.hackthefuture.florianzjef.loggingapp.models.Token;
+import com.hackthefuture.florianzjef.loggingapp.session.UserSessionManager;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Protocol;
@@ -26,19 +27,17 @@ public class RestClient {
 
     private Retrofit client;
 
-    public RestClient(String email, String password){
-        client = createClient(email, password);
+    public RestClient(String token){
+        client = createClient(token);
     }
 
-    /*public RestClient(){
-        HashMap<String, String> user = UserSessionManager.getUserDetails();
-        String email = user.get(UserSessionManager.KEY_NAME);
-        String password = user.get(UserSessionManager.KEY_PASSWORD);
+    public RestClient(){
+        String token = UserSessionManager.getToken();
 
-        client = createClient(email, password);
-    }*/
+        client = createClient(token);
+    }
 
-    private Retrofit createClient(final String email, final String password){
+    private Retrofit createClient(final String token){
 
         OkHttpClient okClient = new OkHttpClient();
 
@@ -46,10 +45,8 @@ public class RestClient {
             @Override
             public Response intercept(Chain chain) throws IOException {
 
-                final String credentials = email + ":" + password;
-                final String encodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                //final String basic = "Basic " + encodedCredentials;
-                final String basic = "3aea67f6e2d54e2aa1e0495ea8bad4a9";
+
+                final String basic = token;
 
                 Request request = chain.request();
                 request = request.newBuilder()
