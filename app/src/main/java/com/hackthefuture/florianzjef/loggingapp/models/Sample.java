@@ -7,6 +7,8 @@ public class Sample implements Serializable {
     private String name="";
     private String value="";
     private String remark ="";
+    private String dateTime ="";
+    private String researcher ="";
 
     public String getName() {
         return name;
@@ -14,5 +16,17 @@ public class Sample implements Serializable {
 
     public String getRemark() {
         return remark;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public String getResearcher() {
+        return researcher;
     }
 }
