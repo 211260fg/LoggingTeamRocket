@@ -102,6 +102,8 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
             adapter.notifyDataSetChanged();
     }
 
+
+
     @Override
     public void onSamplesLoadFailed(String message) {
         Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT).show();

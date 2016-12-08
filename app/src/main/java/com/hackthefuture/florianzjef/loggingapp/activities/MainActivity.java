@@ -1,5 +1,6 @@
 package com.hackthefuture.florianzjef.loggingapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -155,6 +156,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(toggle!=null) {
             toggle.setDrawerIndicatorEnabled(!isArrow);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }

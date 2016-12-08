@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.hackthefuture.florianzjef.loggingapp.R;
 import com.hackthefuture.florianzjef.loggingapp.activities.MainActivity;
 import com.hackthefuture.florianzjef.loggingapp.models.Photo;
+import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,12 +38,9 @@ public class SampleDetailsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private View rootView;
 
-    private ImageButton btnTakepicture;
-    private Button btnSave;
-    private EditText input_Description;
-    private EditText input_Name;
 
-    public static SampleDetailsFragment newInstance() {
+
+    public static SampleDetailsFragment newInstance(Sample log) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_LOG, log);
 
@@ -60,26 +58,7 @@ public class SampleDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_new_log, container, false);
-
-        input_Description = (EditText) rootView.findViewById(R.id.input_description);
-        input_Name = (EditText) rootView.findViewById(R.id.input_title);
-
-        btnTakepicture = (ImageButton) rootView.findViewById(R.id.btnTakepicture);
-        btnTakepicture.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                sendTakePictureIntent();
-            }
-        });
-
-        btnSave = (Button) rootView.findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                savePhoto();
-            }
-        });
-
-
+        rootView = inflater.inflate(R.layout.fragment_sample_details, container, false);
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -95,19 +74,6 @@ public class SampleDetailsFragment extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_sample_details, container, false);
-        TextView tvTitle = (TextView) rootView.findViewById(R.id.tvTitle);
-        TextView tvDescription = (TextView) rootView.findViewById(R.id.tvDescription);
-        TextView tvDatetime = (TextView) rootView.findViewById(R.id.tvDate);
-
-        tvTitle.setText(sample.getName());
-        tvDescription.setText(sample.getRemark());
-        tvDatetime.setText(sample.getDatetime());
-
-        return rootView;
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -128,67 +94,6 @@ public class SampleDetailsFragment extends Fragment {
     }
 
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    private void sendTakePictureIntent() {
-
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            }catch (IOException ex){
-                Toast.makeText(getContext(),"can't create photo file",Toast.LENGTH_SHORT);
-            }
-            if(photoFile!=null){
-                Uri photoURI = FileProvider.getUriForFile(getContext(),
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
-
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-        }
-    }
-
-    private void savePhoto() {
-        if(mCurrentPhotoPath== null && mCurrentPhotoPath ==""){
-            Toast.makeText(getContext(),"you didn't take a picture", Toast.LENGTH_LONG);
-        }
-        if (input_Name.getText().toString()=="" && input_Description.getText().toString()==""){
-            Toast.makeText(getContext(),"fill in all te fields", Toast.LENGTH_LONG);
-        }
-        Photo photo = new Photo();
-        File file = new File(mCurrentPhotoPath);
-        photo.photoFile=file;
-        photo.description=input_Description.getText().toString();
-        photo.name= input_Name.getText().toString();
-    }
-
-    String mCurrentPhotoPath;
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 
 }
