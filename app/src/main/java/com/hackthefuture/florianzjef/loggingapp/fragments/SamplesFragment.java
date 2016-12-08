@@ -98,8 +98,6 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
             SamplesRecyclerViewAdpater adapter = (SamplesRecyclerViewAdpater) rvLogs.getAdapter();
             adapter.setSamples(samples);
             adapter.notifyDataSetChanged();
-
-        Snackbar.make(getView(), "loaded "+samples.size(), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
