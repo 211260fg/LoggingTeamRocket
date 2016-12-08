@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Repository.startDBManager(MainActivity.this);
+
         Intent i = getIntent();
         UserSessionManager sessionfromintent = i.getParcelableExtra("SESSION");
         if (sessionfromintent != null) {
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
             return;
         }
+
 
 
         setContentView(R.layout.activity_main);

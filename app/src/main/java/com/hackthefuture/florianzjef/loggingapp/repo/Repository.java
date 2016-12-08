@@ -30,6 +30,10 @@ public class Repository {
         dbManager = new DBManager(context);
     }
 
+    public static DBManager getDBManager(){
+        return dbManager;
+    }
+
     public static List<Sample> getSamples() {
         return samples;
     }
@@ -73,6 +77,7 @@ public class Repository {
     }
 
     public static void onSampleLoadFailed(String message) {
+        dbManager.querySamples();
         for(OnSamplesLoadedListener listener: samplesListeners){
             listener.onSamplesLoadFailed(message);
         }

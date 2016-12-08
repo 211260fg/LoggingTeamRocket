@@ -13,10 +13,6 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmMigrationNeededException;
 
-/**
- * Created by Florian on 8/12/2016.
- */
-
 public class DBManager {
 
     private Realm db;
