@@ -5,6 +5,6 @@ public interface OnFragmentInteractionListener {
 
     void onFragmentInteraction(InteractedFragment interactedFragment, int pos);
         enum InteractedFragment{
-            LOGS, NEWLOG, LOGDETAILS
+            LOGS, NEWLOG, AUTHENTICATION, LOGDETAILS
         }
 }

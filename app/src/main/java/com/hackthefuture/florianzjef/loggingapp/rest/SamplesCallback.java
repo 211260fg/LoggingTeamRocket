@@ -16,13 +16,19 @@ import retrofit.Response;
 public class SamplesCallback implements Callback<SampleWrapper> {
 
 
-    public void startCallback(){
+    public void getAllSamples(){
+        RestClient restClient = new RestClient("", "");
+        RestClient.SampleApiInterface service = restClient.getClient().create(RestClient.SampleApiInterface.class);
+        Call<SampleWrapper> sampleCall = service.getAllSamples();
+        sampleCall.enqueue(this);
+    }
+
+    public void getResearcherSamples(){
         RestClient restClient = new RestClient("", "");
         RestClient.SampleApiInterface service = restClient.getClient().create(RestClient.SampleApiInterface.class);
         Call<SampleWrapper> sampleCall = service.getSamples();
         sampleCall.enqueue(this);
     }
-
 
     @Override
     public void onResponse(Response<SampleWrapper> response) {

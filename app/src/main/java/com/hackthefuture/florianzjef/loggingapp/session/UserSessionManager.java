@@ -57,7 +57,6 @@ public class UserSessionManager implements Parcelable, Serializable {
 
 
     //Create login session
-    //TODO off main thread
     public void createUserLoginSession(String name, String email) {
         // Storing login value as TRUE
         secpref.put(IS_USER_LOGIN, true);

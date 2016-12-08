@@ -25,11 +25,22 @@
         android:id="@+id/drawer_layout">
 
         <FrameLayout
-            android:id="@+id/fragmentPane"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:padding="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+        <!--<ImageView
+            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:src="@drawable/background2"
+            android:alpha=".80"
+            android:scaleType="centerCrop"/>-->
+
+            <FrameLayout
+                android:id="@+id/fragmentPane"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </FrameLayout>
 
         <android.support.design.widget.NavigationView
             android:paddingTop="?attr/actionBarSize"

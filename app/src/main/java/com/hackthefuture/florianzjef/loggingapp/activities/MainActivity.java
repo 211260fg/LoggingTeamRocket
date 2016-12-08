@@ -19,6 +19,8 @@ import com.hackthefuture.florianzjef.loggingapp.R;
 import com.hackthefuture.florianzjef.loggingapp.fragments.SamplesFragment;
 import com.hackthefuture.florianzjef.loggingapp.fragments.NewSampleFragment;
 import com.hackthefuture.florianzjef.loggingapp.fragments.OnFragmentInteractionListener;
+import com.hackthefuture.florianzjef.loggingapp.repo.Repository;
+import com.hackthefuture.florianzjef.loggingapp.session.UserSessionManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener{
 
@@ -27,9 +29,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton fab;
     ActionBarDrawerToggle toggle;
 
+    private UserSessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Repository.startDBManager(MainActivity.this);
+
+        Intent i = getIntent();
+        UserSessionManager sessionfromintent = i.getParcelableExtra("SESSION");
+        if (sessionfromintent != null) {
+            session = sessionfromintent;
+        } else {
+            session = new UserSessionManager(getApplicationContext());
+        }
+
+        if (!session.checkLogin()) {
+            finish();
+            return;
+        }
+
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -60,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        samplesFragment = new SamplesFragment();
+        samplesFragment = SamplesFragment.newInstance(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentPane, samplesFragment).commit();
     }
 
@@ -110,21 +132,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
 
         int id = item.getItemId();
-        if (id == R.id.nav_samples) {
+        if(id == R.id.nav_profile){
+
+        }else if (id == R.id.nav_my_samples) {
             if (samplesFragment == null || !samplesFragment.isVisible()) {
-                samplesFragment = samplesFragment.newInstance();
+                samplesFragment = SamplesFragment.newInstance(false);
                 transaction.replace(R.id.fragmentPane, samplesFragment);
                 transaction.commit();
+            }else{
+                samplesFragment.reloadSamples(false);
+            }
+        }else if (id == R.id.nav_samples) {
+            if (samplesFragment == null || !samplesFragment.isVisible()) {
+                samplesFragment = SamplesFragment.newInstance(true);
+                transaction.replace(R.id.fragmentPane, samplesFragment);
+                transaction.commit();
+            }else{
+                samplesFragment.reloadSamples(true);
             }
 
         } else if (id == R.id.nav_photos) {
 
         } else if (id == R.id.nav_stats) {
 
-        } else if (id == R.id.nav_share) {
+        }else if (id == R.id.nav_settings) {
 
-        } else if (id == R.id.nav_send) {
-
+        }else if (id == R.id.nav_logout) {
+            Repository.logoutResearcher();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

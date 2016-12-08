@@ -6,7 +6,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Sample implements Serializable {
+import io.realm.RealmObject;
+
+public class Sample extends RealmObject implements Serializable{
     private String name="";
     private String value="";
     private String remark ="";

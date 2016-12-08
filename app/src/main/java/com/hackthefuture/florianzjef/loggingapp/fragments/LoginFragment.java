@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 
 import com.hackthefuture.florianzjef.loggingapp.R;
 import com.hackthefuture.florianzjef.loggingapp.activities.AuthActivity;
+import com.hackthefuture.florianzjef.loggingapp.activities.MainActivity;
+import com.hackthefuture.florianzjef.loggingapp.models.Researcher;
 import com.hackthefuture.florianzjef.loggingapp.repo.OnResearcherConnectedListener;
 import com.hackthefuture.florianzjef.loggingapp.repo.Repository;
 import com.hackthefuture.florianzjef.loggingapp.session.UserSessionManager;
@@ -116,15 +119,15 @@ public class LoginFragment extends Fragment implements OnResearcherConnectedList
         }
 
         //Repository.loginUser(input_email.getText().toString(), input_password.getText().toString());
+        Repository.loginResearcher(new Researcher(input_email.getText().toString(), input_password.getText().toString()));
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Laden...");
         progressDialog.show();
-
     }
 
     private void signup(){
-        //mListener.onFragmentInteraction(OnFragmentInteractionListener.InteractedFragment.AUTHENTICATION, 0);
+        mListener.onFragmentInteraction(OnFragmentInteractionListener.InteractedFragment.AUTHENTICATION, 0);
     }
 
 
@@ -159,14 +162,14 @@ public class LoginFragment extends Fragment implements OnResearcherConnectedList
         String email = input_email.getText().toString();
         String password = input_password.getText().toString();
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.isEmpty()) {
             input_email.setError("error");
             valid = false;
         } else {
             input_email.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 20) {
+        if (password.isEmpty()) {
             input_password.setError("error");
             valid = false;
         } else {
@@ -176,21 +179,25 @@ public class LoginFragment extends Fragment implements OnResearcherConnectedList
         return valid;
     }
 
-    public String getEmail(){
-        return input_email.getText().toString();
-    }
-
-    public String getPassword(){
-        return input_password.getText().toString();
-    }
-
     @Override
     public void onTokenReceived(String token) {
+        if(progressDialog!=null)
+            progressDialog.dismiss();
 
+        session.createUserLoginSession(input_email.getText().toString(), input_password.getText().toString());
+        session.saveCurrentUser(new Researcher(input_email.getText().toString(), input_password.getText().toString()));
+
+        Intent i = new Intent(getActivity(), MainActivity.class);
+        i.putExtra("SESSION", (Parcelable) session);
+        startActivity(i);
+        getActivity().finish();
     }
 
     @Override
     public void onConnectionFailed(String message) {
+        if(progressDialog!=null)
+            progressDialog.dismiss();
 
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
 }

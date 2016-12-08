@@ -1,36 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:title="Samples"
-            android:id="@+id/nav_samples"
-            android:icon="@drawable/ic_menu_gallery"
-            android:name="Samples" />
-        <item
-            android:title="Photos"
-            android:id="@+id/nav_photos"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:name="Photos" />
-        <item
-            android:title="Stats"
-            android:id="@+id/nav_stats"
-            android:icon="@drawable/ic_menu_manage"
-            android:name="Stats" />
-    </group>
-
-    <item android:title="Communicate" android:name="Communicate">
+    <item
+        android:name="Researcher"
+        android:title="Researcher">
         <menu>
             <item
-                android:title="Share"
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:name="Share" />
+                android:id="@+id/nav_profile"
+                android:name="Profile"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Profile" />
             <item
-                android:title="Send"
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_my_samples"
+                android:name="My samples"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="My samples" />
+        </menu>
+    </item>
+
+    <item
+        android:name="Logs"
+        android:title="Logs">
+        <menu>
+                <item
+                    android:id="@+id/nav_samples"
+                    android:name="All samples"
+                    android:icon="@drawable/ic_menu_gallery"
+                    android:title="All samples" />
+                <item
+                    android:id="@+id/nav_photos"
+                    android:name="Photos"
+                    android:icon="@drawable/ic_menu_slideshow"
+                    android:title="Photos" />
+                <item
+                    android:id="@+id/nav_stats"
+                    android:name="Stats"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="Stats" />
+        </menu>
+    </item>
+
+    <item
+        android:name="Other"
+        android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:name="Settings"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_logout"
+                android:name="Logout"
                 android:icon="@drawable/ic_menu_send"
-                android:name="Send" />
+                android:title="Logout" />
         </menu>
     </item>
 
