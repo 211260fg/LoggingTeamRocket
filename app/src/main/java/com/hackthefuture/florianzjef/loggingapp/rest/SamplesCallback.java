@@ -32,7 +32,7 @@ public class SamplesCallback implements Callback<SampleWrapper> {
     }
 
     public void postSample(Sample sample){
-        RestClient restClient = new RestClient("", "");
+        RestClient restClient = new RestClient("","");
         RestClient.SampleApiInterface service = restClient.getClient().create(RestClient.SampleApiInterface.class);
         Call<Sample> sampleCall = service.postSample(sample);
         sampleCall.enqueue(new Callback<Sample>() {
