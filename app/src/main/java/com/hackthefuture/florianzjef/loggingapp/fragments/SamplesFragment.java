@@ -151,6 +151,8 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
             swipeRefreshLayout.setRefreshing(false);
     }
 
+
+
     @Override
     public void onSamplesLoadFailed(String message) {
         Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT).show();

@@ -34,7 +34,7 @@ import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
-public class NewSampleFragment extends Fragment {
+public class NewPhotoFragment extends Fragment {
 
     private final int PERMISSIONS = 1;
     private static final String ARG_LOG = "LOG";
