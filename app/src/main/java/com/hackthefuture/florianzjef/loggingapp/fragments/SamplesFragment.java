@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Fade;
 import android.view.LayoutInflater;
@@ -41,7 +42,7 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
         rootView = inflater.inflate(R.layout.fragment_samples, container, false);
 
         rvLogs = (RecyclerView) rootView.findViewById(R.id.rvLogs);
-        rvLogs.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvLogs.setLayoutManager(new LinearLayoutManager(getContext()));
         rvLogs.setAdapter(new SamplesRecyclerViewAdpater(Repository.getSamples(), this));
 
         Repository.addListener(this);
