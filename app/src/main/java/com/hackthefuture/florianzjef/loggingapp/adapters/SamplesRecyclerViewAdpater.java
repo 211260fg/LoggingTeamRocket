@@ -9,16 +9,16 @@ import android.widget.TextView;
 
 
 import com.hackthefuture.florianzjef.loggingapp.R;
-import com.hackthefuture.florianzjef.loggingapp.models.Log;
+import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 
 import java.util.List;
 
-public class LogsRecyclerViewAdpater extends RecyclerView.Adapter<LogsRecyclerViewAdpater.LogViewHolder>{
+public class SamplesRecyclerViewAdpater extends RecyclerView.Adapter<SamplesRecyclerViewAdpater.LogViewHolder>{
 
-    private List<Log> logs;
+    private List<Sample> logs;
     private LogInteractionListener listener;
 
-    public LogsRecyclerViewAdpater(List<Log> logs, LogInteractionListener listener) {
+    public SamplesRecyclerViewAdpater(List<Sample> logs, LogInteractionListener listener) {
         this.logs = logs;
         this.listener=listener;
     }
@@ -31,7 +31,7 @@ public class LogsRecyclerViewAdpater extends RecyclerView.Adapter<LogsRecyclerVi
 
     @Override
     public void onBindViewHolder(final LogViewHolder holder, final int position) {
-        final Log log = logs.get(position);
+        final Sample log = logs.get(position);
         holder.tvTitle.setText(log.getTitle());
 
         ViewCompat.setTransitionName(holder.tvTitle, String.valueOf(position) + "_title");
@@ -51,7 +51,7 @@ public class LogsRecyclerViewAdpater extends RecyclerView.Adapter<LogsRecyclerVi
             return 0;
     }
 
-    public void setLogs(List<Log> logs) {
+    public void setLogs(List<Sample> logs) {
         this.logs = logs;
     }
 

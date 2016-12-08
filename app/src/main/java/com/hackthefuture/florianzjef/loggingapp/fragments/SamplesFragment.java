@@ -15,19 +15,19 @@ import android.view.ViewGroup;
 
 import com.hackthefuture.florianzjef.loggingapp.R;
 import com.hackthefuture.florianzjef.loggingapp.activities.MainActivity;
-import com.hackthefuture.florianzjef.loggingapp.adapters.LogsRecyclerViewAdpater;
+import com.hackthefuture.florianzjef.loggingapp.adapters.SamplesRecyclerViewAdpater;
 import com.hackthefuture.florianzjef.loggingapp.animation.DetailsTransition;
 import com.hackthefuture.florianzjef.loggingapp.repo.Repostiory;
 
 
-public class LogsFragment extends Fragment implements LogsRecyclerViewAdpater.LogInteractionListener{
+public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpater.LogInteractionListener{
 
     private View rootView;
     private RecyclerView rvLogs;
     private FloatingActionButton fab;
 
-    public static LogsFragment newInstance() {
-        LogsFragment fragment = new LogsFragment();
+    public static SamplesFragment newInstance() {
+        SamplesFragment fragment = new SamplesFragment();
         return fragment;
     }
 
@@ -37,7 +37,7 @@ public class LogsFragment extends Fragment implements LogsRecyclerViewAdpater.Lo
 
         rvLogs = (RecyclerView) rootView.findViewById(R.id.rvLogs);
         rvLogs.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        rvLogs.setAdapter(new LogsRecyclerViewAdpater(Repostiory.getLogs(), this));
+        rvLogs.setAdapter(new SamplesRecyclerViewAdpater(Repostiory.getLogs(), this));
 
         return rootView;
     }
@@ -60,9 +60,9 @@ public class LogsFragment extends Fragment implements LogsRecyclerViewAdpater.Lo
     }
 
     @Override
-    public void onLogClicked(LogsRecyclerViewAdpater.LogViewHolder holder, int pos) {
+    public void onLogClicked(SamplesRecyclerViewAdpater.LogViewHolder holder, int pos) {
 
-        LogDetailsFragment logDetailsFragment = LogDetailsFragment.newInstance(Repostiory.getLogs().get(pos));
+        SampleDetailsFragment logDetailsFragment = SampleDetailsFragment.newInstance(Repostiory.getLogs().get(pos));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             logDetailsFragment.setSharedElementEnterTransition(new DetailsTransition());

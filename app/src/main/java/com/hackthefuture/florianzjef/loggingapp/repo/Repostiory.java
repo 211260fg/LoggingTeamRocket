@@ -1,20 +1,20 @@
 package com.hackthefuture.florianzjef.loggingapp.repo;
 
-import com.hackthefuture.florianzjef.loggingapp.models.Log;
+import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Repostiory {
 
-    private static List<Log> logs = new ArrayList<>();
+    private static List<Sample> logs = new ArrayList<>();
 
     static{
         for(int i=0; i<5; i++)
-            logs.add(new Log("log "+i, "description of log"+i));
+            logs.add(new Sample("log "+i, "description of log"+i));
     }
 
-    public static List<Log> getLogs() {
+    public static List<Sample> getLogs() {
         return logs;
     }
 }

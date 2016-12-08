@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import com.hackthefuture.florianzjef.loggingapp.R;
 import com.hackthefuture.florianzjef.loggingapp.activities.MainActivity;
 
-public class NewLogFragment extends Fragment {
+public class NewSampleFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private View rootView;
 
-    public static NewLogFragment newInstance() {
-        NewLogFragment fragment = new NewLogFragment();
+    public static NewSampleFragment newInstance() {
+        NewSampleFragment fragment = new NewSampleFragment();
         return fragment;
     }
 

@@ -12,20 +12,20 @@ import android.widget.TextView;
 
 import com.hackthefuture.florianzjef.loggingapp.R;
 import com.hackthefuture.florianzjef.loggingapp.activities.MainActivity;
-import com.hackthefuture.florianzjef.loggingapp.models.Log;
+import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 
 
-public class LogDetailsFragment extends Fragment {
+public class SampleDetailsFragment extends Fragment {
 
     private static final String ARG_LOG = "LOG";
-    private Log log;
+    private Sample log;
     private View rootView;
 
-    public static LogDetailsFragment newInstance(Log log) {
+    public static SampleDetailsFragment newInstance(Sample log) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_LOG, log);
 
-        LogDetailsFragment fragment = new LogDetailsFragment();
+        SampleDetailsFragment fragment = new SampleDetailsFragment();
         fragment.setArguments(args);
 
         return fragment;
@@ -34,7 +34,7 @@ public class LogDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        log = (Log) getArguments().getSerializable(ARG_LOG);
+        log = (Sample) getArguments().getSerializable(ARG_LOG);
         setHasOptionsMenu(true);
     }
 

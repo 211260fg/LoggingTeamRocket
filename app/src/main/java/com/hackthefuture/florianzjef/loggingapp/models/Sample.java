@@ -3,11 +3,11 @@ package com.hackthefuture.florianzjef.loggingapp.models;
 
 import java.io.Serializable;
 
-public class Log implements Serializable {
+public class Sample implements Serializable {
     private String title;
     private String description;
 
-    public Log(String title, String description) {
+    public Sample(String title, String description) {
         this.title = title;
         this.description = description;
     }
