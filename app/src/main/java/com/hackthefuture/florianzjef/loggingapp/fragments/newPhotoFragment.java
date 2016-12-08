@@ -60,7 +60,7 @@ public class NewPhotoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_new_sample, container, false);
+        rootView = inflater.inflate(R.layout.fragment_new_photo, container, false);
         input_Description = (EditText) rootView.findViewById(R.id.input_description);
         input_Name = (EditText) rootView.findViewById(R.id.input_title);
 
