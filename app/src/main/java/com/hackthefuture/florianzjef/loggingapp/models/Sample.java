@@ -15,11 +15,14 @@ public class Sample extends RealmObject implements Serializable{
     private String datetime ="";
     private String researcher ="";
 
+    public Sample(){
+
+    }
     public Sample(String name, String value, String remark, String researcher) {
         this.name = name;
         this.value = value;
         this.remark = remark;
-        this.datetime = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").format(new Date());;
+        this.datetime = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").format(new Date());
         this.researcher = researcher;
     }
 

@@ -10,6 +10,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmMigrationNeededException;
 
@@ -40,7 +41,13 @@ public class DBManager {
         db.commitTransaction();
     }
 
-    private void put(Iterable objects) {
+    public void put(Iterable objects) {
+        db.beginTransaction();
+        db.copyToRealmOrUpdate(objects);
+        db.commitTransaction();
+    }
+
+    public void put(RealmObject objects) {
         db.beginTransaction();
         db.copyToRealmOrUpdate(objects);
         db.commitTransaction();

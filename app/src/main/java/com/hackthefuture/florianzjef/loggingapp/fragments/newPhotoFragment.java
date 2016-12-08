@@ -156,11 +156,11 @@ public class NewPhotoFragment extends Fragment {
         if (input_Name.getText().toString()=="" && input_Description.getText().toString()==""){
             Toast.makeText(getContext(),"fill in all te fields", Toast.LENGTH_LONG);
         }
-        Photo photo = new Photo();
+        String name= input_Name.getText().toString();
+        String description = input_Description.getText().toString();
         File file = new File(mCurrentPhotoPath);
-        photo.photoFile=file;
-        photo.description=input_Description.getText().toString();
-        photo.name= input_Name.getText().toString();
+        Photo photo = new Photo(name,description, file,mCurrentPhotoPath);
+
     }
 
     String mCurrentPhotoPath;

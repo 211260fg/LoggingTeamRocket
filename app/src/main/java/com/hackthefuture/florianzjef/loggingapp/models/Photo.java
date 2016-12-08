@@ -15,12 +15,22 @@ import java.util.Date;
 
 public class Photo {
 
+    public String path="";
     public String name="";
     public String description="";
     public File photoFile;
     public String datetime="";
 
     public Photo() {
+    }
+
+    public Photo(String name, String description, File file, String mCurrentPhotoPath) {
+        this.name= name;
+        this.description= description;
+        this.photoFile=file;
+        this.path=mCurrentPhotoPath;
+        this.datetime=new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").format(new Date());
+
     }
 
     public String getDatetime() {

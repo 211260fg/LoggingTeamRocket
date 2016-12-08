@@ -17,4 +17,5 @@ public class Researcher {
     public String getPassword() {
         return password;
     }
+
 }

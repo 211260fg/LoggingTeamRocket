@@ -114,4 +114,15 @@ public class Repository {
         }
 
     }
+
+    public static void addSample(Sample sample){
+        samplesCallback.postSample(sample);
+    }
+
+    public static void onSamplePosted(Sample sample){
+        dbManager.put(sample);
+        dbManager.querySamples();
+    }
+
+
 }

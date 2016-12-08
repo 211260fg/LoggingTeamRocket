@@ -65,11 +65,12 @@ public class NewSampleFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_new_sample, container, false);
         input_Description = (EditText) rootView.findViewById(R.id.input_description);
         input_Name = (EditText) rootView.findViewById(R.id.input_title);
+        input_Value= (EditText) rootView.findViewById(R.id.input_value);
 
         btnSave = (Button) rootView.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                savePhoto();
+                saveSample();
             }
         });
         setHasOptionsMenu(true);
@@ -113,10 +114,13 @@ public class NewSampleFragment extends Fragment {
         String value = input_Value.getText().toString();
         if (name=="" && description=="" && value==""){
             Toast.makeText(getContext(),"fill in all te fields", Toast.LENGTH_LONG);
+        }else{
+            UserSessionManager.getUserDetails().get(UserSessionManager.KEY_NAME);
+            Sample sample= new Sample(name,value,description,UserSessionManager.getCurrentUser().getName());
+            Repository.addSample(sample);
         }
-        UserSessionManager.getUserDetails().get(UserSessionManager.KEY_NAME);
-        Sample sample= new Sample(name,value,description,UserSessionManager.);
-        Repository
+
+
     }
 
 

@@ -2,6 +2,7 @@ package com.hackthefuture.florianzjef.loggingapp.rest;
 
 import android.util.Log;
 
+import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 import com.hackthefuture.florianzjef.loggingapp.models.SampleWrapper;
 import com.hackthefuture.florianzjef.loggingapp.repo.Repository;
 
@@ -28,6 +29,34 @@ public class SamplesCallback implements Callback<SampleWrapper> {
         RestClient.SampleApiInterface service = restClient.getClient().create(RestClient.SampleApiInterface.class);
         Call<SampleWrapper> sampleCall = service.getSamples();
         sampleCall.enqueue(this);
+    }
+
+    public void postSample(Sample sample){
+        RestClient restClient = new RestClient("", "");
+        RestClient.SampleApiInterface service = restClient.getClient().create(RestClient.SampleApiInterface.class);
+        Call<Sample> sampleCall = service.postSample(sample);
+        sampleCall.enqueue(new Callback<Sample>() {
+            @Override
+            public void onResponse(Response<Sample> response) {
+                if(response.isSuccess()){
+                    Repository.onSamplePosted(response.body());
+                }
+                else{
+                    try {
+                        Log.d("sample response", "fail - "+response.errorBody().string());
+                        Repository.onSampleLoadFailed("Error posting sample");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
 
     @Override

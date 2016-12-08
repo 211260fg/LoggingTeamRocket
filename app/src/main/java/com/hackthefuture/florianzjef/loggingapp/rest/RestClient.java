@@ -4,6 +4,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.hackthefuture.florianzjef.loggingapp.models.Researcher;
+import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 import com.hackthefuture.florianzjef.loggingapp.models.SampleWrapper;
 import com.hackthefuture.florianzjef.loggingapp.models.Token;
 import com.squareup.okhttp.Interceptor;
@@ -86,8 +87,8 @@ public class RestClient {
         @GET(Values.URL_SAMPLES_ALL)
         Call<SampleWrapper> getAllSamples();
 
-        @GET(Values.URL_SAMPLES_POST)
-        Call<SampleWrapper> postSample();
+        @POST(Values.URL_SAMPLES_POST)
+        Call<Sample> postSample(@Body Sample sample);
 
     }
 
@@ -109,7 +110,7 @@ public class RestClient {
         @GET(Values.URL_PHOTOS_ALL)
         Call<SampleWrapper> getAllPhotos();
 
-        @GET(Values.URL_PHOTOS_POST)
+        @POST(Values.URL_PHOTOS_POST)
         Call<SampleWrapper> postPhoto();
 
     }
