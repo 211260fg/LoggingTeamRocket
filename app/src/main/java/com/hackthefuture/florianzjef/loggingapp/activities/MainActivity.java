@@ -3,7 +3,6 @@ package com.hackthefuture.florianzjef.loggingapp.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,14 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hackthefuture.florianzjef.loggingapp.R;
-import com.hackthefuture.florianzjef.loggingapp.fragments.LogsFragment;
-import com.hackthefuture.florianzjef.loggingapp.fragments.NewLogFragment;
+import com.hackthefuture.florianzjef.loggingapp.fragments.SamplesFragment;
+import com.hackthefuture.florianzjef.loggingapp.fragments.NewSampleFragment;
 import com.hackthefuture.florianzjef.loggingapp.fragments.OnFragmentInteractionListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener{
 
-    LogsFragment logsFragment;
-    NewLogFragment newLogFragment;
+    SamplesFragment samplesFragment;
+    NewSampleFragment newSampleFragment;
     private FloatingActionButton fab;
     ActionBarDrawerToggle toggle;
 
@@ -54,14 +53,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_bottom_right, R.anim.exit_to_top_left, R.anim.enter_from_top_left, R.anim.exit_to_bottom_right)
-                        .replace(R.id.fragmentPane, NewLogFragment.newInstance())
+                        .replace(R.id.fragmentPane, NewSampleFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
             }
         });
 
-        logsFragment = new LogsFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentPane, logsFragment).commit();
+        samplesFragment = new SamplesFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentPane, samplesFragment).commit();
     }
 
     @Override
@@ -110,14 +109,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
 
         int id = item.getItemId();
-        if (id == R.id.nav_logs) {
-            if (logsFragment == null || !logsFragment.isVisible()) {
-                logsFragment = logsFragment.newInstance();
-                transaction.replace(R.id.fragmentPane, logsFragment);
+        if (id == R.id.nav_samples) {
+            if (samplesFragment == null || !samplesFragment.isVisible()) {
+                samplesFragment = samplesFragment.newInstance();
+                transaction.replace(R.id.fragmentPane, samplesFragment);
                 transaction.commit();
             }
 
-        } else if (id == R.id.nav_profiles) {
+        } else if (id == R.id.nav_photos) {
 
         } else if (id == R.id.nav_stats) {
 

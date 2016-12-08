@@ -9,17 +9,17 @@ import android.widget.TextView;
 
 
 import com.hackthefuture.florianzjef.loggingapp.R;
-import com.hackthefuture.florianzjef.loggingapp.models.Log;
+import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 
 import java.util.List;
 
-public class LogsRecyclerViewAdpater extends RecyclerView.Adapter<LogsRecyclerViewAdpater.LogViewHolder>{
+public class SamplesRecyclerViewAdpater extends RecyclerView.Adapter<SamplesRecyclerViewAdpater.LogViewHolder>{
 
-    private List<Log> logs;
+    private List<Sample> samples;
     private LogInteractionListener listener;
 
-    public LogsRecyclerViewAdpater(List<Log> logs, LogInteractionListener listener) {
-        this.logs = logs;
+    public SamplesRecyclerViewAdpater(List<Sample> samples, LogInteractionListener listener) {
+        this.samples = samples;
         this.listener=listener;
     }
 
@@ -31,8 +31,8 @@ public class LogsRecyclerViewAdpater extends RecyclerView.Adapter<LogsRecyclerVi
 
     @Override
     public void onBindViewHolder(final LogViewHolder holder, final int position) {
-        final Log log = logs.get(position);
-        holder.tvTitle.setText(log.getTitle());
+        final Sample log = samples.get(position);
+        holder.tvTitle.setText(log.getName());
 
         ViewCompat.setTransitionName(holder.tvTitle, String.valueOf(position) + "_title");
         holder.tvTitle.setOnClickListener(new View.OnClickListener() {
@@ -45,14 +45,14 @@ public class LogsRecyclerViewAdpater extends RecyclerView.Adapter<LogsRecyclerVi
 
     @Override
     public int getItemCount() {
-        if(logs!=null)
-            return logs.size();
+        if(samples !=null)
+            return samples.size();
         else
             return 0;
     }
 
-    public void setLogs(List<Log> logs) {
-        this.logs = logs;
+    public void setSamples(List<Sample> logs) {
+        this.samples = logs;
     }
 
     public class LogViewHolder extends RecyclerView.ViewHolder{

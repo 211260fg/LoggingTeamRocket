@@ -28,14 +28,14 @@ import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
-public class NewLogFragment extends Fragment {
+public class NewSampleFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private View rootView;
     private ImageButton btnTakepicture;
 
-    public static NewLogFragment newInstance() {
-        NewLogFragment fragment = new NewLogFragment();
+    public static NewSampleFragment newInstance() {
+        NewSampleFragment fragment = new NewSampleFragment();
         return fragment;
     }
 
