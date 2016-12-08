@@ -157,4 +157,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             toggle.setDrawerIndicatorEnabled(!isArrow);
         }
     }
+
 }
