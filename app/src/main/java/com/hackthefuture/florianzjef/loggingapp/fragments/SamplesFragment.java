@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,10 +18,14 @@ import com.hackthefuture.florianzjef.loggingapp.R;
 import com.hackthefuture.florianzjef.loggingapp.activities.MainActivity;
 import com.hackthefuture.florianzjef.loggingapp.adapters.SamplesRecyclerViewAdpater;
 import com.hackthefuture.florianzjef.loggingapp.animation.DetailsTransition;
-import com.hackthefuture.florianzjef.loggingapp.repo.Repostiory;
+import com.hackthefuture.florianzjef.loggingapp.models.Sample;
+import com.hackthefuture.florianzjef.loggingapp.repo.OnSamplesLoadedListener;
+import com.hackthefuture.florianzjef.loggingapp.repo.Repository;
+
+import java.util.List;
 
 
-public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpater.LogInteractionListener{
+public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpater.LogInteractionListener, OnSamplesLoadedListener{
 
     private View rootView;
     private RecyclerView rvLogs;
@@ -37,7 +42,10 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
 
         rvLogs = (RecyclerView) rootView.findViewById(R.id.rvLogs);
         rvLogs.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        rvLogs.setAdapter(new SamplesRecyclerViewAdpater(Repostiory.getLogs(), this));
+        rvLogs.setAdapter(new SamplesRecyclerViewAdpater(Repository.getSamples(), this));
+
+        Repository.addListener(this);
+        Repository.loadSamples();
 
         return rootView;
     }
@@ -57,12 +65,13 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
     public void onDetach() {
         super.onDetach();
         ((MainActivity) getActivity()).toggleFABVisibility(false);
+        Repository.removeListener(this);
     }
 
     @Override
     public void onLogClicked(SamplesRecyclerViewAdpater.LogViewHolder holder, int pos) {
 
-        SampleDetailsFragment logDetailsFragment = SampleDetailsFragment.newInstance(Repostiory.getLogs().get(pos));
+        SampleDetailsFragment logDetailsFragment = SampleDetailsFragment.newInstance(Repository.getSamples().get(pos));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             logDetailsFragment.setSharedElementEnterTransition(new DetailsTransition());
@@ -79,5 +88,22 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdpa
                 .replace(R.id.fragmentPane, logDetailsFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onSamplesLoadSuccess(List<Sample> samples) {
+        ((SamplesRecyclerViewAdpater) rvLogs.getAdapter()).setSamples(samples);
+        rvLogs.getAdapter().notifyDataSetChanged();
+
+            SamplesRecyclerViewAdpater adapter = (SamplesRecyclerViewAdpater) rvLogs.getAdapter();
+            adapter.setSamples(samples);
+            adapter.notifyDataSetChanged();
+
+        Snackbar.make(getView(), "loaded "+samples.size(), Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSamplesLoadFailed(String message) {
+        Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT).show();
     }
 }

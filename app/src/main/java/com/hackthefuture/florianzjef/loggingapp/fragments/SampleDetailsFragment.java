@@ -55,8 +55,8 @@ public class SampleDetailsFragment extends Fragment {
         TextView tvTitle = (TextView) rootView.findViewById(R.id.tvTitle);
         TextView tvDescription = (TextView) rootView.findViewById(R.id.tvDescription);
 
-        tvTitle.setText(log.getTitle());
-        tvDescription.setText(log.getDescription());
+        tvTitle.setText(log.getName());
+        tvDescription.setText(log.getRemark());
 
         return rootView;
     }

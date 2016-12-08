@@ -4,19 +4,15 @@ package com.hackthefuture.florianzjef.loggingapp.models;
 import java.io.Serializable;
 
 public class Sample implements Serializable {
-    private String title;
-    private String description;
+    private String name="";
+    private String value="";
+    private String remark ="";
 
-    public Sample(String title, String description) {
-        this.title = title;
-        this.description = description;
+    public String getName() {
+        return name;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
+    public String getRemark() {
+        return remark;
     }
 }

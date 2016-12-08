@@ -15,11 +15,11 @@ import java.util.List;
 
 public class SamplesRecyclerViewAdpater extends RecyclerView.Adapter<SamplesRecyclerViewAdpater.LogViewHolder>{
 
-    private List<Sample> logs;
+    private List<Sample> samples;
     private LogInteractionListener listener;
 
-    public SamplesRecyclerViewAdpater(List<Sample> logs, LogInteractionListener listener) {
-        this.logs = logs;
+    public SamplesRecyclerViewAdpater(List<Sample> samples, LogInteractionListener listener) {
+        this.samples = samples;
         this.listener=listener;
     }
 
@@ -31,8 +31,8 @@ public class SamplesRecyclerViewAdpater extends RecyclerView.Adapter<SamplesRecy
 
     @Override
     public void onBindViewHolder(final LogViewHolder holder, final int position) {
-        final Sample log = logs.get(position);
-        holder.tvTitle.setText(log.getTitle());
+        final Sample log = samples.get(position);
+        holder.tvTitle.setText(log.getName());
 
         ViewCompat.setTransitionName(holder.tvTitle, String.valueOf(position) + "_title");
         holder.tvTitle.setOnClickListener(new View.OnClickListener() {
@@ -45,14 +45,14 @@ public class SamplesRecyclerViewAdpater extends RecyclerView.Adapter<SamplesRecy
 
     @Override
     public int getItemCount() {
-        if(logs!=null)
-            return logs.size();
+        if(samples !=null)
+            return samples.size();
         else
             return 0;
     }
 
-    public void setLogs(List<Sample> logs) {
-        this.logs = logs;
+    public void setSamples(List<Sample> logs) {
+        this.samples = logs;
     }
 
     public class LogViewHolder extends RecyclerView.ViewHolder{
