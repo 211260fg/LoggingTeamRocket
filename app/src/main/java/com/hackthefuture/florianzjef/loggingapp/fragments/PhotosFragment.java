@@ -1,6 +1,5 @@
 package com.hackthefuture.florianzjef.loggingapp.fragments;
 
-
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.hackthefuture.florianzjef.loggingapp.R;
 import com.hackthefuture.florianzjef.loggingapp.activities.MainActivity;
+import com.hackthefuture.florianzjef.loggingapp.adapters.PhotosRecyclerViewAdapter;
 import com.hackthefuture.florianzjef.loggingapp.adapters.SamplesRecyclerViewAdapter;
 import com.hackthefuture.florianzjef.loggingapp.animation.DetailsTransition;
 import com.hackthefuture.florianzjef.loggingapp.models.Sample;
@@ -27,7 +27,7 @@ import com.hackthefuture.florianzjef.loggingapp.repo.Repository;
 import java.util.List;
 
 
-public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdapter.LogInteractionListener, OnSamplesLoadedListener{
+public class PhotosFragment extends Fragment implements PhotosRecyclerViewAdapter.LogInteractionListener, OnSamplesLoadedListener {
 
     private View rootView;
     private RecyclerView rvLogs;
@@ -39,14 +39,14 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdap
     private SwipeRefreshLayout swipeRefreshLayout;
 
 
-    public static SamplesFragment newInstance(boolean allSamples){
-    Bundle args = new Bundle();
-    args.putBoolean(ARG_ALLSAMPLES, allSamples);
-        SamplesFragment fragment = new SamplesFragment();
-    fragment.setArguments(args);
+    public static PhotosFragment newInstance(boolean allSamples){
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_ALLSAMPLES, allSamples);
+        PhotosFragment fragment = new PhotosFragment();
+        fragment.setArguments(args);
 
-    return fragment;
-}
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,17 +60,15 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdap
         rootView = inflater.inflate(R.layout.fragment_samples, container, false);
 
         rvLogs = (RecyclerView) rootView.findViewById(R.id.rvLogs);
-        rvLogs.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        rvLogs.setAdapter(new SamplesRecyclerViewAdapter(Repository.getSamples(), this));
+        rvLogs.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvLogs.setAdapter(new PhotosRecyclerViewAdapter(getContext(), Repository.getSamples(), this));
 
         Repository.addListener(this);
 
-
-
-            if (loadAllSamples)
-                Repository.loadAllSamples();
-            else
-                Repository.loadResearcherSamples();
+        if (loadAllSamples)
+            Repository.loadAllPhotos();
+        else
+            Repository.loadResearcherPhotos();
 
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
@@ -78,9 +76,9 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdap
             @Override
             public void onRefresh() {
                 if(loadAllSamples)
-                    Repository.loadAllSamples();
+                    Repository.loadAllPhotos();
                 else
-                    Repository.loadResearcherSamples();
+                    Repository.loadResearcherPhotos();
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
@@ -116,7 +114,7 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdap
     }
 
     @Override
-    public void onLogClicked(SamplesRecyclerViewAdapter.SampleViewHolder holder, int pos) {
+    public void onLogClicked(PhotosRecyclerViewAdapter.PhotoViewHolder holder, int pos) {
 
         SampleDetailsFragment logDetailsFragment = SampleDetailsFragment.newInstance(Repository.getSamples().get(pos));
 
@@ -141,12 +139,12 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdap
 
     @Override
     public void onSamplesLoadSuccess(List<Sample> samples) {
-        ((SamplesRecyclerViewAdapter) rvLogs.getAdapter()).setSamples(samples);
+        ((PhotosRecyclerViewAdapter) rvLogs.getAdapter()).setSamples(samples);
         rvLogs.getAdapter().notifyDataSetChanged();
 
-            SamplesRecyclerViewAdapter adapter = (SamplesRecyclerViewAdapter) rvLogs.getAdapter();
-            adapter.setSamples(samples);
-            adapter.notifyDataSetChanged();
+        PhotosRecyclerViewAdapter adapter = (PhotosRecyclerViewAdapter) rvLogs.getAdapter();
+        adapter.setSamples(samples);
+        adapter.notifyDataSetChanged();
         if(swipeRefreshLayout!=null&&swipeRefreshLayout.isRefreshing())
             swipeRefreshLayout.setRefreshing(false);
     }

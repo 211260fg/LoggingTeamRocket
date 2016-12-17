@@ -59,6 +59,20 @@ public class SampleDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_sample_details, container, false);
+
+        TextView tvTitle = (TextView) rootView.findViewById(R.id.tvTitle);
+        TextView tvDescription = (TextView) rootView.findViewById(R.id.tvDescription);
+        TextView tvValue = (TextView) rootView.findViewById(R.id.tvValue);
+        TextView tvDate = (TextView) rootView.findViewById(R.id.tvDate);
+        TextView tvResearcher = (TextView) rootView.findViewById(R.id.tvResearcher);
+
+
+        tvTitle.setText(sample.getName());
+        tvDescription.setText(sample.getRemark());
+        tvValue.setText(sample.getValue());
+        tvDate.setText(sample.getDatetime());
+        tvResearcher.setText(sample.getResearcher());
+
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -85,6 +99,7 @@ public class SampleDetailsFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
         ((MainActivity)getActivity()).setActionbarArrow(true);
+        ((MainActivity) getActivity()).toggleFABVisibility(false);
     }
 
     @Override

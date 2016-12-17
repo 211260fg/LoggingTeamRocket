@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hackthefuture.florianzjef.loggingapp.R;
+import com.hackthefuture.florianzjef.loggingapp.fragments.NewFragment;
+import com.hackthefuture.florianzjef.loggingapp.fragments.PhotosFragment;
 import com.hackthefuture.florianzjef.loggingapp.fragments.SamplesFragment;
 import com.hackthefuture.florianzjef.loggingapp.fragments.NewSampleFragment;
 import com.hackthefuture.florianzjef.loggingapp.fragments.OnFragmentInteractionListener;
@@ -24,10 +26,10 @@ import com.hackthefuture.florianzjef.loggingapp.session.UserSessionManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener{
 
-    SamplesFragment samplesFragment;
-    NewSampleFragment newSampleFragment;
+    private SamplesFragment samplesFragment;
+    private PhotosFragment photosFragment;
     private FloatingActionButton fab;
-    ActionBarDrawerToggle toggle;
+    private ActionBarDrawerToggle toggle;
 
     private UserSessionManager session;
 
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_bottom_right, R.anim.exit_to_top_left, R.anim.enter_from_top_left, R.anim.exit_to_bottom_right)
-                        .replace(R.id.fragmentPane, NewSampleFragment.newInstance())
+                        .replace(R.id.fragmentPane, NewFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
             }
@@ -147,6 +149,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }else{
                 samplesFragment.reloadSamples(false);
             }
+        }else if (id == R.id.nav_my_photos) {
+            if (photosFragment == null || !photosFragment.isVisible()) {
+                photosFragment = PhotosFragment.newInstance(false);
+                transaction.replace(R.id.fragmentPane, photosFragment);
+                transaction.commit();
+            }else{
+                samplesFragment.reloadSamples(false);
+            }
         }else if (id == R.id.nav_samples) {
             if (samplesFragment == null || !samplesFragment.isVisible()) {
                 samplesFragment = SamplesFragment.newInstance(true);
@@ -157,6 +167,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
         } else if (id == R.id.nav_photos) {
+            if (photosFragment == null || !photosFragment.isVisible()) {
+                photosFragment = PhotosFragment.newInstance(true);
+                transaction.replace(R.id.fragmentPane, photosFragment);
+                transaction.commit();
+            }else{
+                samplesFragment.reloadSamples(true);
+            }
 
         } else if (id == R.id.nav_stats) {
 

@@ -3,7 +3,9 @@ package com.hackthefuture.florianzjef.loggingapp.rest;
 import android.util.Base64;
 import android.util.Log;
 
+import com.hackthefuture.florianzjef.loggingapp.models.Photo;
 import com.hackthefuture.florianzjef.loggingapp.models.Researcher;
+import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 import com.hackthefuture.florianzjef.loggingapp.models.SampleWrapper;
 import com.hackthefuture.florianzjef.loggingapp.models.Token;
 import com.hackthefuture.florianzjef.loggingapp.session.UserSessionManager;
@@ -12,6 +14,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Protocol;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -83,8 +86,17 @@ public class RestClient {
         @GET(Values.URL_SAMPLES_ALL)
         Call<SampleWrapper> getAllSamples();
 
-        @GET(Values.URL_SAMPLES_POST)
-        Call<SampleWrapper> postSample();
+        @GET(Values.URL_PHOTOS)
+        Call<SampleWrapper> getPhotos();
+
+        @GET(Values.URL_PHOTOS_ALL)
+        Call<SampleWrapper> getAllPhotos();
+
+        @POST(Values.URL_SAMPLES_POST)
+        Call<ResponseBody> postSample(@Body Sample sample);
+
+        @POST(Values.URL_PHOTOS_POST)
+        Call<ResponseBody> postPhoto(@Body Photo photo);
 
     }
 
@@ -95,19 +107,6 @@ public class RestClient {
 
         @POST(Values.URL_RESEARCHER_GETTOKEN)
         Call<Token> getToken(@Body Researcher researcher);
-
-    }
-
-    interface PhotoApiInterface{
-
-        @GET(Values.URL_PHOTOS)
-        Call<SampleWrapper> getPhotos();
-
-        @GET(Values.URL_PHOTOS_ALL)
-        Call<SampleWrapper> getAllPhotos();
-
-        @GET(Values.URL_PHOTOS_POST)
-        Call<SampleWrapper> postPhoto();
 
     }
 

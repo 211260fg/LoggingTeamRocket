@@ -2,6 +2,7 @@ package com.hackthefuture.florianzjef.loggingapp.repo;
 
 import android.content.Context;
 
+import com.hackthefuture.florianzjef.loggingapp.models.Photo;
 import com.hackthefuture.florianzjef.loggingapp.models.Researcher;
 import com.hackthefuture.florianzjef.loggingapp.models.Sample;
 import com.hackthefuture.florianzjef.loggingapp.persistence.DBManager;
@@ -43,6 +44,12 @@ public class Repository {
     }
     public static void loadResearcherSamples(){
         samplesCallback.getResearcherSamples();
+    }
+    public static void loadAllPhotos(){
+        samplesCallback.getAllPhotos();
+    }
+    public static void loadResearcherPhotos(){
+        samplesCallback.getResearcherPhotos();
     }
 
 
@@ -113,5 +120,19 @@ public class Repository {
             listener.onSamplesLoadSuccess(samples);
         }
 
+    }
+
+    public static void postSample(Sample sample){
+        samplesCallback.postSample(sample);
+    }
+
+    public static void postPhoto(Photo photo){
+        samplesCallback.postPhoto(photo);
+    }
+
+    public static void onSamplePosted() {
+    }
+
+    public static void samplePostFailed() {
     }
 }

@@ -15,6 +15,16 @@ public class Sample extends RealmObject implements Serializable{
     private String datetime ="";
     private String researcher ="";
 
+    public Sample() {
+    }
+
+    public Sample(String name, String value, String remark, String datetime) {
+        this.name = name;
+        this.value = value;
+        this.remark = remark;
+        this.datetime = datetime;
+    }
+
     public String getName() {
         return name;
     }

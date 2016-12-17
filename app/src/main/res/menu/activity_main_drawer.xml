@@ -15,6 +15,11 @@
                 android:name="My samples"
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="My samples" />
+            <item
+                android:id="@+id/nav_my_photos"
+                android:name="My samples"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="My photos" />
         </menu>
     </item>
 
