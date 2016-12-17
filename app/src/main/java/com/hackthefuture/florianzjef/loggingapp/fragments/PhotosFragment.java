@@ -116,7 +116,7 @@ public class PhotosFragment extends Fragment implements PhotosRecyclerViewAdapte
     @Override
     public void onLogClicked(PhotosRecyclerViewAdapter.PhotoViewHolder holder, int pos) {
 
-        SampleDetailsFragment logDetailsFragment = SampleDetailsFragment.newInstance(Repository.getSamples().get(pos));
+        SampleDetailsFragment logDetailsFragment = SampleDetailsFragment.newInstance(Repository.getSamples().get(pos), true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             logDetailsFragment.setSharedElementEnterTransition(new DetailsTransition());

@@ -118,7 +118,7 @@ public class SamplesFragment extends Fragment implements SamplesRecyclerViewAdap
     @Override
     public void onLogClicked(SamplesRecyclerViewAdapter.SampleViewHolder holder, int pos) {
 
-        SampleDetailsFragment logDetailsFragment = SampleDetailsFragment.newInstance(Repository.getSamples().get(pos));
+        SampleDetailsFragment logDetailsFragment = SampleDetailsFragment.newInstance(Repository.getSamples().get(pos), false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             logDetailsFragment.setSharedElementEnterTransition(new DetailsTransition());
